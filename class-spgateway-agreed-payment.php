@@ -226,6 +226,7 @@ function spgateway_gateway_agreed_init()
             <?php
         }
 
+
         /**
          * Get spgateway Args for passing to spgateway
          *
@@ -313,6 +314,397 @@ function spgateway_gateway_agreed_init()
             return $spgateway_args;
         }
 
+
+
+        function agreed_spgateway_encrypt($key="", $iv="", $str="")
+        {
+            $str = trim(bin2hex (mcrypt_encrypt(MCRYPT_RIJNDAEL_128,$key,$this->agreed_addpadding($str),MCRYPT_MODE_CBC,$iv)));
+            Return  $str;
+        }
+
+        function agreed_addpadding ($string, $blocksize=32)
+        {
+            $len = strlen($string);
+            $pad = $blocksize - ($len % $blocksize);
+            $string .= Str_repeat(chr($pad), $pad);
+            Return $string;
+        }
+
+
+
+
+        function get_current_full_url(){
+            $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+            return htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' );
+        }
+
+        function process_spgateway_credit_card_post_and_order($spgateway_args, $order_id) {
+
+
+            $date                = new DateTime();
+
+
+
+            $card_number                 = str_replace(" ", "", $_POST['card_number']);
+            $card_code_cvv               = $_POST['card_code'];
+            $spgateway_agreed_month_exp  = $_POST['spgateway_agreed_month'];
+            $spgateway_agreed_year_exp   = $_POST['spgateway_agreed_year'];
+            $MerchantOrderNo             = $date->getTimestamp();
+
+
+
+            $MerchantID_ = $spgateway_args['MerchantID'];
+            $ItemDesc= $spgateway_args['ItemDesc'];
+            $Email = $spgateway_args['Email'];
+            $Count = $spgateway_args['Count'];
+            $Pos_ =  'String';
+            $totalPayable = 0;
+            $Card6No =  substr($card_number, 0, 6);
+            $Card4No =  substr($card_number, strlen($card_number)-3, strlen($card_number));
+            $TokenLife = '2021';
+            $TOkenSwitch = 'get';
+            $Version = '1.0';
+
+            //get total order payable
+
+            for($i=1; $i<= $Count; $i++) {
+                $totalPayable += $spgateway_args['Price' . $i];
+            }
+
+
+
+            $settings = [
+                'MerchantID_' =>$MerchantID_,
+                'Pos_' =>$Pos_,
+                'CardNo' =>$card_number, //'4000221111111111',
+                'EXP' =>$spgateway_agreed_year_exp,//'2021',
+                'CVC' =>$card_code_cvv,//'333',
+                'HashKey'=>$this->HashKey, //'YK5drj7GZuYiSgfoPlc24OhHJj5g6I35',
+                'HashIV'=>$this->HashIV,
+                'GatewayUrl' => $this->gateway, //'https://ccore.spgateway.com/API/CreditCard',
+            ];
+
+
+
+
+            $input_array = [
+                'Version' =>$Version,
+                'ProdDesc' =>$ItemDesc,
+                'Amt' =>$totalPayable,
+                'MerchantOrderNo' =>$MerchantOrderNo,
+                'TimeStamp' => $date->getTimestamp(),
+                'PayerEmail' =>$Email,
+                'TOkenSwitch' =>$TOkenSwitch,
+                'TokenTerm' =>$Email,
+                'TokenLife' =>$TokenLife,
+                'Card6No' => $Card6No,
+                'Card4No' => $Card4No,
+                'EXP' =>$spgateway_agreed_year_exp,
+                'CardNo' =>$card_number,
+                'CVC' =>$card_code_cvv
+            ];
+
+
+
+            $Post_data_str = http_build_query ($input_array);
+            $Post_data = $this->agreed_spgateway_encrypt ($settings['HashKey'], $settings['HashIV'], $Post_data_str);
+            ?>
+                <form action="<?php print $settings['GatewayUrl']; ?>" method="POST" >
+                    <Input type = 'text' name = 'MerchantID_' vAlue = '<?php print $settings['MerchantID_']; ?>' /> <br>
+                    <Input type = 'text' name = 'Pos_' value = '<?php print $settings['Pos_']; ?>' /> <br>
+                    <Input type = 'text' name = 'PostData_' value = '<?php print $Post_data; ?>' /> <br>
+                    <input type = 'submit' value = ' Go to authorize '>
+                </form>
+            <?php
+
+            print "<pre>";
+
+            print_r($input_array);
+            print_r($settings);
+
+            print "</pre>";
+
+            print "<pre>";
+            print_r($spgateway_args);
+            print_r($_POST);
+
+            print "<br> generated results<br>";
+            print "</pre>";
+
+
+
+
+
+        }
+
+        function generate_spgateway_form_card($order, $customerInfo)
+        {
+            ?>
+
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+            <!-- Optional theme -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+            <form action="<?php print $this->get_current_full_url(); ?>" method="post" >
+                <div class="container wrapper">
+                    <div class="row cart-head">
+                        <div class="container pull-left" style="width: 50%;">
+                            <div class="panel panel-info">
+                                <div class="panel-heading"><span><i class="glyphicon glyphicon-lock"></i></span> Secure Payment</div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-md-12"><strong>Card Type:</strong></div>
+                                        <div class="col-md-12">
+                                            <select id="CreditCardType" name="CreditCardType" class="form-control">
+                                                <option value="5">Credit Card</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12"><strong>Credit Card Number:</strong></div>
+                                        <div class="col-md-12"><input type="text" class="form-control" name="card_number"   ></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12"><strong>Card CVV:</strong></div>
+                                        <div class="col-md-12"><input type="text" class="form-control" name="card_code" value=""></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <strong>Expiration Date</strong>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="spgateway_agreed_month">
+                                                <option value="">Month</option>
+                                                <option value="01">01</option>
+                                                <option value="02">02</option>
+                                                <option value="03">03</option>
+                                                <option value="04">04</option>
+                                                <option value="05">05</option>
+                                                <option value="06">06</option>
+                                                <option value="07">07</option>
+                                                <option value="08">08</option>
+                                                <option value="09">09</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <select class="form-control" name="spgateway_agreed_year">
+                                                <option value="">Year</option>
+                                                <option value="2015">2015</option>
+                                                <option value="2016">2016</option>
+                                                <option value="2017">2017</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12" style="padding-top:10px;">
+                                            <span>Pay secure using your credit card.</span>
+                                        </div>
+                                        <div class="col-md-12" style="padding-top:10px;" >
+                                            <ul class="cards">
+                                                <li class="visa hand">Visa</li>
+                                                <li class="mastercard hand">MasterCard</li>
+                                                <li class="amex hand">Amex</li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12"><br>
+                                            <button type="submit" class="btn btn-primary btn-submit-fix">Pay Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cart-footer">
+
+                    </div>
+                </div>
+            </form>
+
+            <style>
+
+                .container {
+                }
+
+                /* images*/
+                ol, ul {
+                    list-style: none;
+                }
+                .hand {
+                    cursor: pointer;
+                    cursor: pointer;
+                }
+                .cards{
+                    padding-left:0;
+                }
+                .cards li {
+                    -webkit-transition: all .2s;
+                    -moz-transition: all .2s;
+                    -ms-transition: all .2s;
+                    -o-transition: all .2s;
+                    transition: all .2s;
+                    background-image: url('//c2.staticflickr.com/4/3713/20116660060_f1e51a5248_m.jpg');
+                    background-position: 0 0;
+                    float: left;
+                    height: 32px;
+                    margin-right: 8px;
+                    text-indent: -9999px;
+                    width: 51px;
+                }
+                .cards .mastercard {
+                    background-position: -51px 0;
+                }
+                .cards li {
+                    -webkit-transition: all .2s;
+                    -moz-transition: all .2s;
+                    -ms-transition: all .2s;
+                    -o-transition: all .2s;
+                    transition: all .2s;
+                    background-image: url('//c2.staticflickr.com/4/3713/20116660060_f1e51a5248_m.jpg');
+                    background-position: 0 0;
+                    float: left;
+                    height: 32px;
+                    margin-right: 8px;
+                    text-indent: -9999px;
+                    width: 51px;
+                }
+                .cards .amex {
+                    background-position: -102px 0;
+                }
+                .cards li {
+                    -webkit-transition: all .2s;
+                    -moz-transition: all .2s;
+                    -ms-transition: all .2s;
+                    -o-transition: all .2s;
+                    transition: all .2s;
+                    background-image: url('//c2.staticflickr.com/4/3713/20116660060_f1e51a5248_m.jpg');
+                    background-position: 0 0;
+                    float: left;
+                    height: 32px;
+                    margin-right: 8px;
+                    text-indent: -9999px;
+                    width: 51px;
+                }
+                .cards li:last-child {
+                    margin-right: 0;
+                }
+                /* images end */
+
+
+
+                /*
+                 * BOOTSTRAP
+                 */
+
+                .panel-footer{
+                    background:#fff;
+                }
+                .btn{
+                    border-radius: 1px;
+                }
+                .btn-sm, .btn-group-sm > .btn{
+                    border-radius: 1px;
+                }
+                .input-sm, .form-horizontal .form-group-sm .form-control{
+                    border-radius: 1px;
+                }
+
+                .panel-info {
+                    border-color: #999;
+                }
+
+                .panel-heading {
+                    border-top-left-radius: 1px;
+                    border-top-right-radius: 1px;
+                }
+                .panel {
+                    border-radius: 1px;
+                }
+                .panel-info > .panel-heading {
+                    color: #eee;
+                    border-color: #999;
+                }
+                .panel-info > .panel-heading {
+                    background-image: linear-gradient(to bottom, #555 0px, #888 100%);
+                }
+
+                hr {
+                    border-color: #999 -moz-use-text-color -moz-use-text-color;
+                }
+
+                .panel-footer {
+                    border-bottom-left-radius: 1px;
+                    border-bottom-right-radius: 1px;
+                    border-top: 1px solid #999;
+                }
+
+                .btn-link {
+                    color: #888;
+                }
+
+                hr{
+                    margin-bottom: 10px;
+                    margin-top: 10px;
+                }
+
+                /** MEDIA QUERIES **/
+                @media only screen and (max-width: 989px){
+                    .span1{
+                        margin-bottom: 15px;
+                        clear:both;
+                    }
+                }
+
+                @media only screen and (max-width: 764px){
+                    .inverse-1{
+                        float:right;
+                    }
+                }
+
+                @media only screen and (max-width: 586px){
+                    .cart-titles{
+                        display:none;
+                    }
+                    .panel {
+                        margin-bottom: 1px;
+                    }
+                }
+
+                .form-control {
+                    border-radius: 1px;
+                }
+
+                @media only screen and (max-width: 486px){
+
+
+                }
+            </style>
+
+            <?php
+        }
+
+
         /**
          * Generate the spgateway button link (POST method)
          *
@@ -330,13 +722,8 @@ function spgateway_gateway_agreed_init()
             $name = '';
             $items = $order->get_product_from_item( $item_name );
 
-            //             $_product = wc_get_product(  66 );
-            //            foreach($item_name as $key => $value) {
-            //                print " test " . $value['product_id'];
-            //            }
 
-            // get setup return url for sendright
-            $spgateway_args['ReturnURL'] = spgateway_set_return_url(['itemName'=>$item_name, 'sendRightKeyWord'=>$sendRightKeyWord, 'orderId'=>$order_id]);
+            //$spgateway_args['ReturnURL'] = spgateway_set_return_url(['itemName'=>$item_name, 'sendRightKeyWord'=>$sendRightKeyWord, 'orderId'=>$order_id]);
 
             // create user's account
             $customerInfo = spgateway_get_customer_info($order_id);
@@ -349,36 +736,48 @@ function spgateway_gateway_agreed_init()
             ]);
 
 
+            // Start Ui
+
+            $this->generate_spgateway_form_card($order, $customerInfo);
+
+            $this->process_spgateway_credit_card_post_and_order($spgateway_args, $order_id);
+            // End Ui
+
+
+
+
+
+
             //            $pa_koostis_value = get_post_meta($product->id);
 
 
             // make filter to detect if this is sendright product then if so, we need to redirect to thank you page
             // for sendright registration
             // $spgateway_args['ReturnURL'] = get_site_url() . '/thank-you?orderId='.$order_id;
-                         print "<pre>";
+//                         print "<pre>";
             // print "product title " . $spgateway_args['Title1'];
             // print "spgateway arg";
             //                         print_r($_product);
             //                                     print_r($item_nam);
-            print_r($spgateway_args);
+//            print_r($spgateway_args);
             //                                     print_r($order);
-                                     print "</pre>";
-            //                                     exit;
+//                                     print "</pre>";
+            exit;
             //                         exit;
-            $spgateway_gateway = $this->gateway;
-            $spgateway_args_array = array();
-            foreach ($spgateway_args as $key => $value) {
-                $spgateway_args_array[] = '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '" />';
-            }
+//            $spgateway_gateway = $this->gateway;
+//            $spgateway_args_array = array();
+//            foreach ($spgateway_args as $key => $value) {
+//                $spgateway_args_array[] = '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '" />';
+//            }
 
 
             // create users account
 
 
 
-            return '<form id="spgateway" name="spgateway" action=" ' . $spgateway_gateway . ' " method="post" target="_top">' . implode('', $spgateway_args_array) . '
-				<input type="submit" class="button-alt" id="submit_spgateway_payment_form" value="' . __('前往 spgateway 支付頁面', 'spgateway') . '" />
-				</form>' . "<script>setTimeout(\"document.forms['spgateway'].submit();\",\"3000\")</script>";
+//            return '<form id="spgateway" name="spgateway" action=" ' . $spgateway_gateway . ' " method="post" target="_top">' . implode('', $spgateway_args_array) . '
+//				<input type="submit" class="button-alt" id="submit_spgateway_payment_form" value="' . __('前往 spgateway 支付頁面', 'spgateway') . '" />
+//				</form>' . "<script>setTimeout(\"document.forms['spgateway'].submit();\",\"3000\")</script>";
         }
 
 
@@ -483,15 +882,12 @@ function spgateway_gateway_agreed_init()
         }
 
 
-
         function addpadding($string, $blocksize = 32) {
             $len = strlen($string);
             $pad = $blocksize - ($len % $blocksize);
             $string .= str_repeat(chr($pad), $pad);
             return $string;
         }
-
-
 
 
         function curl_work($url = "", $parameter = "") {
@@ -522,7 +918,6 @@ function spgateway_gateway_agreed_init()
             );
             return $return_info;
         }
-
 
 
         function receive_response() {  //接收回傳參數驗證
@@ -582,8 +977,6 @@ function spgateway_gateway_agreed_init()
             }
         }
 
-
-
         /**
          * Output for the order received page.
          *
@@ -627,10 +1020,8 @@ function spgateway_gateway_agreed_init()
         }
 
 
-
-
         function check_spgateway_response() {
-            
+
             echo "ok";
         }
 
