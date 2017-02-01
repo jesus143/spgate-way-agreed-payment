@@ -336,9 +336,9 @@ function spgateway_gateway_agreed_init()
 
         protected function isCreditCardCodes($creditCardInfo) {
             if(empty($creditCardInfo)) {
-                return '<div class="alert alert-danger" >Field  required</div>';
+                return '<div class="alert alert-danger" style="color:white" >Field  required</div>';
             } else if (strlen($creditCardInfo) <> 16) {
-                return '<div  class="alert alert-danger">Code must be 16 characters</div>';
+                return '<div  class="alert alert-danger" style="color:white" >Code must be 16 characters</div>';
             } else {
                 return '';
             }
@@ -346,9 +346,9 @@ function spgateway_gateway_agreed_init()
 
         protected function isCVV($cvv) {
             if(empty($cvv)) {
-                return '<div class="alert alert-danger" >Field  required</div>';
+                return '<div class="alert alert-danger" style="color:white" >Field  required</div>';
             } else if (strlen($cvv) <> 3) {
-                return '<div class="alert alert-danger" >Code must be 3 characters</div>';
+                return '<div class="alert alert-danger" style="color:white" >Code must be 3 characters</div>';
             } else {
                 return '';
             }
@@ -357,7 +357,7 @@ function spgateway_gateway_agreed_init()
         protected function isEmpty($value)
         {
             if(empty($value)) {
-                return '<div class="alert alert-danger" >Field  required</div>';
+                return '<div class="alert alert-danger" style="color:white" >Field  required</div>';
             } else {
                 return '';
             }
