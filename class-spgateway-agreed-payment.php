@@ -29,6 +29,8 @@ require_once(ABSPATH . "/wp-includes/user.php");
 require_once(ABSPATH . "/wp-includes/pluggable.php");
 
 
+
+
 //exit;
 
 add_action('plugins_loaded', 'spgateway_gateway_agreed_init', 0);
@@ -80,9 +82,9 @@ function spgateway_gateway_agreed_init()
 
             // Test Mode
             if ($this->TestMode == 'yes') {
-                $this->gateway = "https://ccore.spgateway.com/API/CreditCard"; //測試網址
+                $this->gateway = "https://ccore.spgateway.com/MPG/mpg_gateway"; //測試網址
             } else {
-                $this->gateway = "https://core.spgateway.com/API/CreditCard"; //正式網址
+                $this->gateway = "https://core.spgateway.com/MPG/mpg_gateway"; //正式網址
             }
 
             // Actions
@@ -271,6 +273,10 @@ function spgateway_gateway_agreed_init()
 
             //CheckValue 串接
             $check_arr = array('MerchantID' => $merchantid, 'TimeStamp' => $timestamp, 'MerchantOrderNo' => $order_id, 'Version' => $version, 'Amt' => $amt);
+
+//           print "<pre>";
+//            print_r($check_arr);
+//            print "</pre>";
             //按陣列的key做升幕排序
             ksort($check_arr);
             //排序後排列組合成網址列格式
@@ -282,6 +288,8 @@ function spgateway_gateway_agreed_init()
             $total_fee = $order->order_total;
             $tel = $order->billing_phone;
             $spgateway_args_2 = array(
+                "HashKey"=>$this->HashKey,
+                "HashIV"=>$this->HashIV,
                 "MerchantID" => $merchantid,
                 "RespondType" => $respondtype,
                 "CheckValue" => $CheckValue,
@@ -306,7 +314,10 @@ function spgateway_gateway_agreed_init()
                 'WEBATM' => false,
                 'VACC'=>false,
                 'CVS'=>false,
-                'BARCODE'=>false
+                'BARCODE'=>false,
+                'CREDITAGREEMENT'=>1,
+                "TokenTerm" => $order->billing_email,
+
             );
 
             $spgateway_args = array_merge($spgateway_args_1, $spgateway_args_2);
@@ -366,6 +377,14 @@ function spgateway_gateway_agreed_init()
 
         function process_spgateway_credit_card_post_and_order($spgateway_args, $order_id) {
 
+            ?>
+
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+            <?php
+
+
 
             $date                = new DateTime();
 
@@ -383,7 +402,7 @@ function spgateway_gateway_agreed_init()
             $ItemDesc= $spgateway_args['ItemDesc'];
             $Email = $spgateway_args['Email'];
             $Count = $spgateway_args['Count'];
-            $Pos_ =  'String';
+            $Pos_ =  'JSON';
             $totalPayable = 0;
             $Card6No =  substr($card_number, 0, 6);
             $Card4No =  substr($card_number, strlen($card_number)-3, strlen($card_number));
@@ -415,8 +434,6 @@ function spgateway_gateway_agreed_init()
             ];
 
 
-
-
             $input_array = [
                 'Version' =>$Version,
                 'ProdDesc' =>$ItemDesc,
@@ -445,35 +462,48 @@ function spgateway_gateway_agreed_init()
             ?>
 
 
-                <form action="<?php print $settings['GatewayUrl']; ?>" method="POST" name="spgateway-agreed-payment" >
+                <form action="<?php print $settings['GatewayUrl']; ?>" method="POST" id="spgateway-agreed-payment" name="spgateway-agreed-payment" >
                     <Input type = 'text' name = 'MerchantID_' vAlue = '<?php print $settings['MerchantID_']; ?>' /> <br>
                     <Input type = 'text' name = 'Pos_' value = '<?php print $settings['Pos_']; ?>' /> <br>
                     <Input type = 'text' name = 'PostData_' value = '<?php print $Post_data; ?>' /> <br>
                     <input type = 'submit' value = ' Go to authorize '>
                 </form>
-
                 <script>
-                    setTimeout(
-                        function(){
-                            document.forms['spgateway-agreed-payment'].submit()
-                        },5000);
+
+
+
+//                    $(document).ready(function(){
+//                       alert("tes");
+                        // Assign handlers immediately after making the request,
+                        // and remember the jqxhr object for this request
+
+//                        $.post( '<?php //print $settings['GatewayUrl']; ?>//', $( "#spgateway-agreed-payment" ).serialize(), function( data ) {
+//                                alert("loadedd");
+//                        }, "json");
+
+//                    });
+                        setTimeout(
+                            function(){
+                                document.forms['spgateway-agreed-payment'].submit()
+                            },5000
+                        );
                 </script>
 
             <?php
 
-            print "<pre>";
-
-            print_r($input_array);
-            print_r($settings);
-
-            print "</pre>";
-
-            print "<pre>";
-            print_r($spgateway_args);
-            print_r($_POST);
-
-            print "<br> generated results<br>";
-            print "</pre>";
+//            print "<pre>";
+//
+//            print_r($input_array);
+//            print_r($settings);
+//
+//            print "</pre>";
+//
+//            print "<pre>";
+//            print_r($spgateway_args);
+//            print_r($_POST);
+//
+//            print "<br> generated results<br>";
+//            print "</pre>";
 
 
 
@@ -483,6 +513,24 @@ function spgateway_gateway_agreed_init()
 
         function generate_spgateway_form_card($order, $customerInfo)
         {
+
+            $CreditCardType = (!empty($_POST['CreditCardType'])) ? $_POST['CreditCardType'] : null;
+            $card_number    = (!empty($_POST['card_number'])) ? $_POST['card_number'] : null;
+            $card_code      = (!empty($_POST['card_code'])) ? $_POST['card_code'] : null;
+            $spgateway_agreed_month      = (!empty($_POST['spgateway_agreed_month'])) ? $_POST['spgateway_agreed_month'] : null;
+            $spgateway_agreed_year      = (!empty($_POST['spgateway_agreed_year'])) ? $_POST['spgateway_agreed_year'] : null;
+
+
+            //            print $_POST['spgateway_agreed_year'];
+            $months  = [
+                '01','02','03','04','05','06','07','08','09','10','11','12'
+            ];
+
+            $year  = [
+                17=>'2017', 18=>'2018', 19=>'2019', 20=>'2020', 21=>'2021', 22=>'2022', 23=>'2023'
+            ];
+            //        print "year" . $spgateway_agreed_year;
+
             ?>
 
             <!-- Latest compiled and minified CSS -->
@@ -514,14 +562,14 @@ function spgateway_gateway_agreed_init()
 
                                     <div class="form-group">
                                         <div class="col-md-12"><strong>Credit Card Number:</strong></div>
-                                        <div class="col-md-12"><input type="number"  class="form-control" name="card_number"   required></div>
+                                        <div class="col-md-12"><input value="<?php print $card_number; ?>" type="number"  class="form-control" name="card_number"   required></div>
                                         <div class="col-md-12">  <?php print $this->isCreditCardCodes($_POST['card_number']) ?></div>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="col-md-12"><strong>Card CVV:</strong></div>
                                         <div class="col-md-12">
-                                            <input type="number" class="form-control" name="card_code" value="" required>
+                                            <input type="number" value="<?php print $card_code; ?>"  class="form-control" name="card_code"    required>
                                             <?php print $this->isCVV($_POST['card_code']) ?>
                                         </div>
                                     </div>
@@ -533,18 +581,12 @@ function spgateway_gateway_agreed_init()
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <select class="form-control" name="spgateway_agreed_month">
                                                 <option value="">Month</option>
-                                                <option value="01">01</option>
-                                                <option value="02">02</option>
-                                                <option value="03">03</option>
-                                                <option value="04">04</option>
-                                                <option value="05">05</option>
-                                                <option value="06">06</option>
-                                                <option value="07">07</option>
-                                                <option value="08">08</option>
-                                                <option value="09">09</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
+                                                <?php foreach($months as $month): ?>
+
+                                                    <option value="<?php print $month; ?>" <?php print ($spgateway_agreed_month == $month) ? 'selected' : null;  ?> ><?php print $month; ?></option>
+
+                                                <?php endforeach; ?>
+
                                             </select>
 
                                             <?php print $this->isEmpty($_POST['spgateway_agreed_month']) ?>
@@ -553,17 +595,9 @@ function spgateway_gateway_agreed_init()
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <select class="form-control" name="spgateway_agreed_year" required>
                                                 <option value="">Year</option>
-                                                <option value="2015">2015</option>
-                                                <option value="2016">2016</option>
-                                                <option value="2017">2017</option>
-                                                <option value="2018">2018</option>
-                                                <option value="2019">2019</option>
-                                                <option value="2020">2020</option>
-                                                <option value="2021">2021</option>
-                                                <option value="2022">2022</option>
-                                                <option value="2023">2023</option>
-                                                <option value="2024">2024</option>
-                                                <option value="2025">2025</option>
+                                                <?php foreach($year as $key => $y): ?>
+                                                    <option value="<?php print $key; ?>" <?php print ($spgateway_agreed_year == $key) ? 'selected' : null;  ?> ><?php print $y; ?></option>
+                                                <?php endforeach; ?>
                                             </select>
                                             <?php print $this->isEmpty($_POST['spgateway_agreed_year']) ?>
                                         </div>
@@ -777,46 +811,42 @@ function spgateway_gateway_agreed_init()
             $items = $order->get_product_from_item( $item_name );
 
 
+            $spgateway_args['ReturnURL'] = '';
+
             //$spgateway_args['ReturnURL'] = spgateway_set_return_url(['itemName'=>$item_name, 'sendRightKeyWord'=>$sendRightKeyWord, 'orderId'=>$order_id]);
 
             // create user's account
-            $customerInfo = spgateway_get_customer_info($order_id);
-            $status = spgateway_createNewWpUser( [
-                'first_name'=>$customerInfo['firstName'],
-                'last_name'=> $customerInfo['lastName'],
-                'user_email'=>$customerInfo['email'],
-                'user_login' =>$customerInfo['email'],
-                'display_name'=>$customerInfo['firstName'] . ' ' . $customerInfo['lastName']
-            ]);
+//            $customerInfo = spgateway_get_customer_info($order_id);
+//            $status = spgateway_createNewWpUser( [
+//                'first_name'=>$customerInfo['firstName'],
+//                'last_name'=> $customerInfo['lastName'],
+//                'user_email'=>$customerInfo['email'],
+//                'user_login' =>$customerInfo['email'],
+//                'display_name'=>$customerInfo['firstName'] . ' ' . $customerInfo['lastName']
+//            ]);
 
 
             // Start Ui
 
-            $this->generate_spgateway_form_card($order, $customerInfo);
+//            $this->generate_spgateway_form_card($order, $customerInfo);
 
 
-            if(
-                $this->isCreditCardCodes($_POST['card_number']) == null and
-                $this->isCVV($_POST['card_code']) == null and
-                $this->isEmpty($_POST['spgateway_agreed_month']) == null and
-                $this->isEmpty($_POST['spgateway_agreed_year']) == null
-            ) {
-                $this->process_spgateway_credit_card_post_and_order($spgateway_args, $order_id);
-            }
-
-
+//            if(
+//                $this->isCreditCardCodes($_POST['card_number']) == null and
+//                $this->isCVV($_POST['card_code']) == null and
+//                $this->isEmpty($_POST['spgateway_agreed_month']) == null and
+//                $this->isEmpty($_POST['spgateway_agreed_year']) == null
+//            ) {
+//                $this->process_spgateway_credit_card_post_and_order($spgateway_args, $order_id);
+//            }
 
 
             // End Ui
 
 
-
-
-
+            $_SESSION['spgateway_args'] = $spgateway_args;
 
             //            $pa_koostis_value = get_post_meta($product->id);
-
-
             // make filter to detect if this is sendright product then if so, we need to redirect to thank you page
             // for sendright registration
             // $spgateway_args['ReturnURL'] = get_site_url() . '/thank-you?orderId='.$order_id;
@@ -828,22 +858,18 @@ function spgateway_gateway_agreed_init()
 //            print_r($spgateway_args);
             //                                     print_r($order);
 //                                     print "</pre>";
-            exit;
-            //                         exit;
-//            $spgateway_gateway = $this->gateway;
-//            $spgateway_args_array = array();
-//            foreach ($spgateway_args as $key => $value) {
-//                $spgateway_args_array[] = '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '" />';
-//            }
-
+//            exit;
+            $spgateway_gateway = $this->gateway;
+            $spgateway_args_array = array();
+            foreach ($spgateway_args as $key => $value) {
+                $spgateway_args_array[] = '<input type="hidden" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '" />';
+            }
 
             // create users account
 
-
-
-//            return '<form id="spgateway" name="spgateway" action=" ' . $spgateway_gateway . ' " method="post" target="_top">' . implode('', $spgateway_args_array) . '
-//				<input type="submit" class="button-alt" id="submit_spgateway_payment_form" value="' . __('前往 spgateway 支付頁面', 'spgateway') . '" />
-//				</form>' . "<script>setTimeout(\"document.forms['spgateway'].submit();\",\"3000\")</script>";
+            return '<form id="spgateway" name="spgateway" action=" ' . $spgateway_gateway . ' " method="post" target="_top">' . implode('', $spgateway_args_array) . '
+  				    <input type="submit" class="button-alt" id="submit_spgateway_payment_form" value="' . __('前往 spgateway 支付頁面', 'spgateway') . '" />
+  				    </form>' . "<script>setTimeout(\"document.forms['spgateway'].submit();\",\"10\")</script>";
         }
 
 

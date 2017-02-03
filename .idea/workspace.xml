@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f4b038bc-a288-4b06-8ecf-593db9bf9226" name="Default" comment="" />
+    <list default="true" id="f4b038bc-a288-4b06-8ecf-593db9bf9226" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/class-spgateway-agreed-payment.php" afterPath="$PROJECT_DIR$/class-spgateway-agreed-payment.php" />
+    </list>
     <ignored path="spgate-way-agreed-payment.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -24,41 +27,10 @@
     <fileColor scope="All" color="f7efff" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="class-spgateway-agreed-payment.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/class-spgateway-agreed-payment.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36090225">
-              <caret line="77" column="41" selection-start-line="77" selection-start-column="41" selection-end-line="77" selection-end-column="41" />
-              <folding>
-                <element signature="n#init_form_fields#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#admin_options#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#get_spgateway_args#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#agreed_spgateway_encrypt#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#agreed_addpadding#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#get_current_full_url#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#process_spgateway_credit_card_post_and_order#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#generate_spgateway_form_card#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
-                <element signature="n#generate_spgateway_form#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#thankyou_page#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#addpadding#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#curl_work#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#receive_response#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#receipt_page#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#process_payment#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#payment_fields#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#check_spgateway_response#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <element signature="n#add_spgateway_agreed_payment_gateway#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-                <marker date="1485773327306" expanded="true" signature="8774:8799" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -114,7 +86,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -123,57 +95,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spgate-way-agreed-payment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spgate-way-agreed-payment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spgate-way-agreed-payment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spgate-way-agreed-payment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spgate-way-agreed-payment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spgate-way-agreed-payment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="agreed" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -191,6 +122,11 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -215,9 +151,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3887262" sideWeight="0.4834254" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3887262" sideWeight="0.4834254" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -250,15 +186,58 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/class-spgateway-agreed-payment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#__construct#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#init_form_fields#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#admin_options#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#get_spgateway_args#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#agreed_spgateway_encrypt#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#agreed_addpadding#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#get_current_full_url#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#generate_spgateway_form_card#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
+            <marker date="1485837196092" expanded="true" signature="8774:8799" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class-spgateway-agreed-payment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#__construct#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#init_form_fields#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#admin_options#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#get_spgateway_args#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#agreed_spgateway_encrypt#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#agreed_addpadding#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#get_current_full_url#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#generate_spgateway_form_card#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
+            <marker date="1485837196092" expanded="true" signature="8774:8799" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/debugging.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -266,7 +245,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -274,7 +252,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2384393">
           <caret line="23" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -290,7 +267,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="63" selection-start-line="5" selection-start-column="63" selection-end-line="5" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -298,7 +274,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -306,7 +281,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.48410404">
           <caret line="139" column="17" selection-start-line="139" selection-start-column="17" selection-end-line="139" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -322,37 +296,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41040462">
           <caret line="42" column="93" selection-start-line="42" selection-start-column="93" selection-end-line="47" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/class-spgateway-agreed-payment.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36090225">
-          <caret line="77" column="41" selection-start-line="77" selection-start-column="41" selection-end-line="77" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.35789475">
+          <caret line="1058" column="0" selection-start-line="1058" selection-start-column="0" selection-end-line="1058" selection-end-column="0" />
           <folding>
+            <element signature="n#__construct#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
             <element signature="n#init_form_fields#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
             <element signature="n#admin_options#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
             <element signature="n#get_spgateway_args#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
             <element signature="n#agreed_spgateway_encrypt#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
             <element signature="n#agreed_addpadding#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
             <element signature="n#get_current_full_url#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#process_spgateway_credit_card_post_and_order#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
             <element signature="n#generate_spgateway_form_card#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#form#1;n#!!top" expanded="true" />
-            <element signature="n#generate_spgateway_form#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#thankyou_page#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#addpadding#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#curl_work#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#receive_response#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#receipt_page#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#process_payment#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#payment_fields#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#check_spgateway_response#0;n#WC_spgateway_agreed_payment#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <element signature="n#add_spgateway_agreed_payment_gateway#0;n#!!block;n#spgateway_gateway_agreed_init#0;n#!!top" expanded="false" />
-            <marker date="1485773327306" expanded="true" signature="8774:8799" placeholder="..." />
+            <marker date="1485837196092" expanded="true" signature="8774:8799" placeholder="..." />
           </folding>
         </state>
       </provider>
