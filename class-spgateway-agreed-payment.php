@@ -18,6 +18,15 @@
  */
 
 
+/**
+ * Requirements:
+ * This plugin require a template for the response, currently template located at
+ * spgateway-manage-response plugin name and you can just copy the template file there and add to theme folder
+ * current active then u need to create a page name "spgateway payment response" and url link should like this
+ * http://demo4.iamrockylin.com/spgateway-payment-response/ after the product purchase here spgateway will redirect
+ */
+
+
 
 //print "<br> <br><br><br><br><br> This is the path of the files path " . ABSPATH;
 //print "<pre>";
@@ -27,7 +36,7 @@
 
 require_once(ABSPATH . "/wp-includes/user.php");
 require_once(ABSPATH . "/wp-includes/pluggable.php");
-
+require_once(ABSPATH . "/wp-content/plugins/spgate-way-agreed-payment/helper.php" );
 
 
 
@@ -813,32 +822,42 @@ function spgateway_gateway_agreed_init()
 
             $spgateway_args['ReturnURL'] = '';
 
+
+            // Create new wp user if not exist
+            spgateway_acc_createNewWpUser($order_id);
+
+            // Assign member to a wishlist membership level
+            spgateway_acc_assignment_to_membership_level(get_user_by( 'email', spgateway_acc_get_customer_info($order_id)['email'] )->data->ID, $spgateway_args['Pid1'] );
+
+
+
+            //            exit;
             //$spgateway_args['ReturnURL'] = spgateway_set_return_url(['itemName'=>$item_name, 'sendRightKeyWord'=>$sendRightKeyWord, 'orderId'=>$order_id]);
 
-            // create user's account
-//            $customerInfo = spgateway_get_customer_info($order_id);
-//            $status = spgateway_createNewWpUser( [
-//                'first_name'=>$customerInfo['firstName'],
-//                'last_name'=> $customerInfo['lastName'],
-//                'user_email'=>$customerInfo['email'],
-//                'user_login' =>$customerInfo['email'],
-//                'display_name'=>$customerInfo['firstName'] . ' ' . $customerInfo['lastName']
-//            ]);
+                        // create user's account
+            //            $customerInfo = spgateway_get_customer_info($order_id);
+            //            $status = spgateway_createNewWpUser( [
+            //                'first_name'=>$customerInfo['firstName'],
+            //                'last_name'=> $customerInfo['lastName'],
+            //                'user_email'=>$customerInfo['email'],
+            //                'user_login' =>$customerInfo['email'],
+            //                'display_name'=>$customerInfo['firstName'] . ' ' . $customerInfo['lastName']
+            //            ]);
 
 
             // Start Ui
 
-//            $this->generate_spgateway_form_card($order, $customerInfo);
+            //            $this->generate_spgateway_form_card($order, $customerInfo);
 
 
-//            if(
-//                $this->isCreditCardCodes($_POST['card_number']) == null and
-//                $this->isCVV($_POST['card_code']) == null and
-//                $this->isEmpty($_POST['spgateway_agreed_month']) == null and
-//                $this->isEmpty($_POST['spgateway_agreed_year']) == null
-//            ) {
-//                $this->process_spgateway_credit_card_post_and_order($spgateway_args, $order_id);
-//            }
+            //            if(
+            //                $this->isCreditCardCodes($_POST['card_number']) == null and
+            //                $this->isCVV($_POST['card_code']) == null and
+            //                $this->isEmpty($_POST['spgateway_agreed_month']) == null and
+            //                $this->isEmpty($_POST['spgateway_agreed_year']) == null
+            //            ) {
+            //                $this->process_spgateway_credit_card_post_and_order($spgateway_args, $order_id);
+            //            }
 
 
             // End Ui
@@ -846,19 +865,22 @@ function spgateway_gateway_agreed_init()
 
             $_SESSION['spgateway_args'] = $spgateway_args;
 
+
+            $spgateway_args['ReturnURL'] = get_site_url() . '/spgateway-payment-response';
+
             //            $pa_koostis_value = get_post_meta($product->id);
             // make filter to detect if this is sendright product then if so, we need to redirect to thank you page
             // for sendright registration
             // $spgateway_args['ReturnURL'] = get_site_url() . '/thank-you?orderId='.$order_id;
-//                         print "<pre>";
+            //                         print "<pre>";
             // print "product title " . $spgateway_args['Title1'];
             // print "spgateway arg";
             //                         print_r($_product);
             //                                     print_r($item_nam);
-//            print_r($spgateway_args);
-            //                                     print_r($order);
-//                                     print "</pre>";
-//            exit;
+            //            print_r($spgateway_args);
+                        //                                     print_r($order);
+            //                                     print "</pre>";
+            //            exit;
             $spgateway_gateway = $this->gateway;
             $spgateway_args_array = array();
             foreach ($spgateway_args as $key => $value) {
@@ -1076,7 +1098,7 @@ function spgateway_gateway_agreed_init()
          * @return void
          */
         function receipt_page($order) {
-            echo '<p>' . __('Please fill out your credit card information<br>', 'spgateway') . '</p>';
+            echo '<p>' . __('Processing order<br>', 'spgateway') . '</p>';
             echo $this->generate_spgateway_form($order);
         }
 
@@ -1134,4 +1156,3 @@ function spgateway_gateway_agreed_init()
     add_filter('woocommerce_payment_gateways', 'add_spgateway_agreed_payment_gateway');
 
 }
-?>
