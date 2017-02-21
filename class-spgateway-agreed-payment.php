@@ -868,6 +868,8 @@ function spgateway_gateway_agreed_init()
 
             $spgateway_args['ReturnURL'] = get_site_url() . '/spgateway-payment-response';
 
+            $spgateway_args['NotifyURL'] = get_site_url() . '/spgateway-notify-url-request/?order_id='.$order_id;
+
             //            $pa_koostis_value = get_post_meta($product->id);
             // make filter to detect if this is sendright product then if so, we need to redirect to thank you page
             // for sendright registration
