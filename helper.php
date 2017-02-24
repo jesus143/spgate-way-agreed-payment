@@ -24,10 +24,20 @@ function spgateway_acc_createNewWpUser($order_id)
         'first_name'=>$customerInfo['firstName'],
         'last_name'=> $customerInfo['lastName'],
         'user_email'=>$customerInfo['email'],
-        'user_login' =>$customerInfo['email'],
+        'user_login' =>$customerInfo['email'], 
+        'user_pass' =>'wklk157#1',
         'display_name'=>$customerInfo['firstName'] . ' ' . $customerInfo['lastName']
     ];
-   return wp_insert_user($data);
+
+    $userId = wp_insert_user($data);
+
+
+    if(is_array($userId->errors)) {
+        return false;
+    } else {
+        return $userId;
+    }
+
 }
 
 function spgateway_acc_get_customer_info($orderId)

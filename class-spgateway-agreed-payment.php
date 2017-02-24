@@ -819,17 +819,13 @@ function spgateway_gateway_agreed_init()
             $name = '';
             $items = $order->get_product_from_item( $item_name );
 
-
             $spgateway_args['ReturnURL'] = '';
 
-
             // Create new wp user if not exist
-            spgateway_acc_createNewWpUser($order_id);
+            $_SESSION['new_user']['user_id'] =  spgateway_createNewWpUser($order_id);
 
             // Assign member to a wishlist membership level
             spgateway_acc_assignment_to_membership_level(get_user_by( 'email', spgateway_acc_get_customer_info($order_id)['email'] )->data->ID, $spgateway_args['Pid1'] );
-
-
 
             //            exit;
             //$spgateway_args['ReturnURL'] = spgateway_set_return_url(['itemName'=>$item_name, 'sendRightKeyWord'=>$sendRightKeyWord, 'orderId'=>$order_id]);
